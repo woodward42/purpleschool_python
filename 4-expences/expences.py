@@ -1,19 +1,26 @@
-# захардкодим траты (в дз говорилось, что это допустимо)
-payments = [11, 22, 33, 44, 55, 66, 77]
+# получаем ввод
+sum_input = input("Введите сумму в формате <руб> руб <коп> коп: ")
 
-# сумма трат
-payments_sum_value = sum(payments)
+# форматируем
+sum_input_formatted = sum_input.strip().lower()
 
-# минимальная трата
-payments_min_value = min(payments)
+rub_splitted_list = sum_input_formatted.split("руб")
+rub_amount = rub_splitted_list[0].strip()
 
-# максимальная трата
-payments_max_value = max(payments)
+if bool(rub_splitted_list[1].strip()):
+    kop_splitted_list = rub_splitted_list[1].strip().split("коп")
+    kop_amount = int(kop_splitted_list[0].strip())
+else:
+    kop_amount = 0
 
-# среднее значение траты
-payments_avg_value = payments_sum_value / len(payments)
+print(f"{(int(rub_amount) * 100 + int(kop_amount)) / 100:.2f}")
+# Принять строку формата "<руб> руб <коп> коп" (пример: 100 руб 10 коп) и вывести нормализованную сумму в рублях с двумя знаками после запятой: 100.10 ₽.
 
-# итоговый кортеж для вывода
-payments_info_values = (payments_min_value, payments_max_value, payments_sum_value)
+# Поддержать варианты без копеек ("159 руб" → "159.00 ₽").
 
-print(payments_info_values)
+# Программа читает одну строку из input()
+# Регистр и лишние пробелы игнорируются
+# Допустимые слова для единиц
+# На выходе — сумма в виде X.YY ₽ (два знака после запятой)
+# Если формат некорректный — вывести:
+# Некорректный формат суммы
