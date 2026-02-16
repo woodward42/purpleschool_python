@@ -4,6 +4,21 @@ sum_input = input("Введите сумму в формате <руб> руб <
 # форматируем
 sum_input_formatted = sum_input.strip().lower()
 
+# проверим ввод
+sum_input_formatted_list = sum_input_formatted.split(" ")
+
+if len(sum_input_formatted_list) == 2 and not sum_input_formatted_list[0].isnumeric():
+    print("Неверный формат суммы в рублях")
+    exit()
+
+if len(sum_input_formatted_list) == 4 and (
+    not sum_input_formatted_list[0].isnumeric()
+    or not sum_input_formatted_list[3].isnumeric()
+):
+    print("Неверный формат суммы в рублях ИЛИ копейках")
+    exit()
+
+
 rub_splitted_list = sum_input_formatted.split("руб")
 rub_amount = rub_splitted_list[0].strip()
 
