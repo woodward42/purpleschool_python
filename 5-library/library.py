@@ -1,8 +1,9 @@
-# Сделай программу, которая работает с каталогом книг из словаря books и выполняет действие в зависимости от параметра запуска action. Используй модуль sys и получай action из sys.argv[1] (import sys)
+# Нужно обработать все возможные ошибки в помощью ошибок:
 
-# Если action == "filter" - С помощью filter выбери книги переданные в sys.argv[2]. С помощью map выведи список строк "Книга — Автор".
-
-# Если action == "sort" - С помощью map подготовь список строк "Книга — Автор". Отсортируй список по алфавиту в зависимости от author или book.
+# Не передан текст фильтра
+# Передана кривая команда
+# Передан кривой параметр сортировки
+# Сделать базовый класс ошибки и расширить нужными ошибками. Обработать их всех и вывести в консоль ошибки.
 
 # импортируем модуль sys
 import sys
@@ -15,24 +16,63 @@ books = [
     {"author": "Кристи", "book": "Прилив"},
 ]
 
-# читаем аргументы запуска скрипта
-action = sys.argv[1]
-val = sys.argv[2]
 
-# смотрим шо делать
-match action:
-    case "filter":
-        filtered_books = filter(lambda b: b["author"] == val, books)
-        formatted_books = list(
-            map(lambda b: f"{b['author']} - {b['book']}", filtered_books)
-        )
-        print("\n".join(formatted_books))
+# создаем классы ошибок
+class LibraryBaseError(Exception):
+    pass
 
-    case "sort":
-        sorted_books: list[dict[str, str]] = sorted(books, key=lambda b: b[val])
-        formatted_books = list(
-            map(lambda b: f"{b['author']} - {b['book']}", sorted_books)
+
+class EmptyFilterError(LibraryBaseError):
+    pass
+
+
+class BadActionError(LibraryBaseError):
+    pass
+
+
+class BadSortParamError(LibraryBaseError):
+    pass
+
+
+try:
+    if len(sys.argv) != 3:
+        raise BadActionError(
+            "Требуется 2 аргумента: action и value (пример: python script.py filter Пратчетт)"
         )
-        print("\n".join(formatted_books))
-    case _:
-        print("Что-то не то с параметрами, друг")
+
+    # читаем аргументы запуска скрипта
+    action = sys.argv[1]
+    val = sys.argv[2]
+
+    # смотрим шо делать
+    match action:
+        case "filter":
+            if str(val) == "":
+                raise EmptyFilterError("Передан пустой фильтр!")
+
+            filtered_books = filter(lambda b: b["author"] == val, books)
+            formatted_books = list(
+                map(lambda b: f"{b['author']} - {b['book']}", filtered_books)
+            )
+            print("\n".join(formatted_books))
+
+        case "sort":
+            if val not in list(books[0].keys()):
+                raise BadSortParamError("Нет такого ключа для сортировки")
+
+            sorted_books: list[dict[str, str]] = sorted(books, key=lambda b: b[val])
+            formatted_books = list(
+                map(lambda b: f"{b['author']} - {b['book']}", sorted_books)
+            )
+            print("\n".join(formatted_books))
+        case _:
+            raise BadActionError("Введен некорректный параметр действия")
+
+except EmptyFilterError as err:
+    print(f"[Ошибка]: {err}")
+
+except BadActionError as err:
+    print(f"[Ошибка]: {err}")
+
+except BadSortParamError as err:
+    print(f"[Ошибка]: {err}")
