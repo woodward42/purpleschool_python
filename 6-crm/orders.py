@@ -56,11 +56,10 @@ def list_orders():
     print(f"Список заказов:\n {orders}")
 
 
-def edit_order(order_id: int):
+def edit_order(order_id: int, title: str):
     for order in orders:
         if order["id"] == order_id:
-            # тут логика изменения заказа, не описана в дз
-            pass
+            order["title"] = title
 
 
 def remove_order(order_id: int):
