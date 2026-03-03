@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "Тестовый заказ",
+    "amount": 666.0,
+    "email": "a@a.ru",
+    "status": "new",
+    "tags": [],
+    "created_at": "2026-03-03 15:13:42.616913",
+    "due": "2025-11-11",
+    "closed_at": null
+  }
+]
