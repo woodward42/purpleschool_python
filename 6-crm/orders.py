@@ -1,5 +1,8 @@
 from typing import TypedDict, Optional
+# from typing import TypedDict
+
 from datetime import datetime
+import storage
 
 # возможные статусы заказа
 ORDER_STATES = {"new", "in_progress", "done", "cancelled"}
@@ -17,16 +20,8 @@ class Order(TypedDict):
     closed_at: Optional[str]
 
 
-# Реализовать все методы:
-
-# create_order
-# list_orders
-# edit_order
-# remove_order
-# Хранить список заказов в переменной
-
 # переменная для хранения заказов
-orders: list[Order] = []
+orders: list[Order] = storage.load()
 
 
 def create_order(
@@ -49,6 +44,7 @@ def create_order(
         "closed_at": None,
     }
     orders.append(new_order)
+    storage.save(orders)
     return new_order
 
 
