@@ -6,9 +6,13 @@
 # В storage.save(items):
 #     Сохранять заказы в файл json
 
+from __future__ import annotations
+
 import json
-from typing import List  # или list в Python 3.9+
-from orders import Order  # Импорт типа Order
+from typing import List, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from orders import Order
 
 filename = "orders.json"
 
@@ -40,6 +44,7 @@ def save(items: List[Order]) -> None:
         with open(filename, "w", encoding="utf-8") as file:
             # Сохраняем с отступами
             json.dump(items, file, ensure_ascii=False, indent=2)
+        print(f"Сохранено {len(items)} заказов в файл {filename}")
 
     except Exception as e:
         print(f"Ошибка сохранения в файл {filename}: {e}")

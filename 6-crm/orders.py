@@ -4,8 +4,7 @@ from typing import TypedDict, Optional
 from datetime import datetime
 import storage
 
-# возможные статусы заказа
-ORDER_STATES = {"new", "in_progress", "done", "cancelled"}
+
 
 
 class Order(TypedDict):
@@ -14,7 +13,7 @@ class Order(TypedDict):
     amount: float
     email: str
     status: str
-    tags: Optional[set[str]]
+    tags: Optional[list[str]]
     created_at: str
     due: Optional[str]
     closed_at: Optional[str]
@@ -29,7 +28,7 @@ def create_order(
     amount: float,
     email: str,
     status: str = "new",
-    tags: Optional[set[str]] = None,
+    tags: Optional[list[str]] = None,
     due: Optional[str] = None,
 ):
     new_order: Order = {
