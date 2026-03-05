@@ -1,13 +1,18 @@
 [
   {
-    "id": 1,
-    "title": "Тестовый заказ",
-    "amount": 666.0,
-    "email": "a@a.ru",
-    "status": "new",
-    "tags": [],
-    "created_at": "2026-03-03 15:13:42.616913",
-    "due": "2025-11-11",
+    "id": "f9f6c5e7-10f2-4394-b074-fb2b34ccc045",
+    "title": "Updated Order",
+    "amount": 1500.0,
+    "email": "test@mail.com",
+    "status": "in_progress",
+    "tags": [
+      "gold",
+      "premium",
+      "urgent",
+      "vip"
+    ],
+    "created_at": "2026-03-05 10:06:24.841825",
+    "due": "2026-04-01",
     "closed_at": null
   }
 ]
